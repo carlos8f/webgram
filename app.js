@@ -5,7 +5,8 @@
 
 var express = require('express'),
     app = module.exports = express.createServer(),
-    conf = require('./conf.js');
+    conf = require('./conf.js'),
+    _ = require('underscore');
 
 // Configuration
 app.configure(function() {
@@ -14,8 +15,20 @@ app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.session({ secret:  conf.session.secret}));
   app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/static'));
   app.enable('jsonp callback');
+  app.register('._', {
+    compile: function(str, options) {
+      var compiled = _.template(str);
+      return function (locals) {
+        return compiled(locals);
+      };
+    }
+  });
+  app.set('view engine', '_');
+  app.set('view options', {
+    layout: false
+  });
 });
 app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
@@ -26,7 +39,7 @@ app.configure('production', function() {
 
 // Routes
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {session: {}});
 });
 
 //Only listen on $ node app.js

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'/>
+    <title>Webgram</title>
+
+    <!-- styles -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-1.0.0.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+    <!-- scripts -->
+    <script type="text/javascript" src="/js/underscore-min.js"></script>
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/webgram.js"></script>
+
+    <!-- bootstrap -->
+    <script type="text/javascript">
+      $(function() {
+        var wg = new Webgram(<%= JSON.stringify(session) %>);
+      });
+    </script>
+  </html>
+  <body>
+    <div id="page"></div>
+
+    <script id="template-topbar" type="text/template">
+    <div class="topbar">
+      <div class="container fixed">
+        <h3><a class="logo" href="#/">Webgram</a></h3>
+        <ul>
+        <% if (session.user) { %>
+          <li><a href="#/feed">Feed</a></li>
+          <li><a href="#/users/<%= session.user.id %>/photos">My photos</a></li>
+          <li><a href="#/users/<%= session.user.id %>/likes">My likes</a></li>
+          <li><a href="#/popular">Popular</a></li>
+          <li><a href="/logout">Log out</a></li>
+        <% } else { %>
+          <li><a href="#/popular">Popular</a></li>
+          <li><a href="#/about">About</a></li>
+        <% } %>
+        </ul>
+      </div>
+    </div>
+    </script>
+
+    <script id="template-anon-home" type="text/template">
+      <div class="container anon-home">
+        <div class="well">
+          <h1>Welcome to <a href="#/">Webgram</a>.</h1>
+          <p>The missing UI for Instagram. To get started,</p>
+          <p><a href="/login" class="btn primary">Log in with Instagram</a></p>
+        </div>
+      </div>
+    </script>
+  </body>
+<html>
