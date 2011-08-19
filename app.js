@@ -5,37 +5,27 @@
 
 var express = require('express'),
     app = module.exports = express.createServer(),
-    conf = require('./conf.js'),
-    helpers = require('./helpers.js')(app, conf);
+    conf = require('./conf.js');
 
 // Configuration
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'html');
-  app.register(".html", require("jqtpl").express);
+app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret:  conf.session.secret}));
-  app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.enable('jsonp callback');
 });
-app.configure('development', function(){
+app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
-app.configure('test', function() {
-  app.use(express.errorHandler());
-});
-app.configure('production', function(){
+app.configure('production', function() {
   app.use(express.errorHandler()); 
 });
 
-// Helpers
-app.helpers(helpers);
-
 // Routes
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.render('index');
 });
 
