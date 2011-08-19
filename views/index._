@@ -5,12 +5,12 @@
     <title>Webgram</title>
 
     <!-- styles -->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-1.0.0.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap-1.0.0.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
 
     <!-- scripts -->
-    <script type="text/javascript" src="/js/underscore-min.js"></script>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/lib/underscore-min.js"></script>
+    <script type="text/javascript" src="/js/lib/zepto.min.js"></script>
     <script type="text/javascript" src="/js/webgram.js"></script>
 
     <!-- bootstrap -->
