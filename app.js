@@ -25,6 +25,15 @@ app.configure(function() {
       };
     }
   });
+  // Static HTML render.
+  app.register('.html', {
+    compile: function(str, options) {
+      return function (locals) {
+        return str;
+      };
+    }
+  });
+
   app.set('view engine', '_');
   app.set('view options', {
     layout: false
@@ -37,9 +46,21 @@ app.configure('production', function() {
   app.use(express.errorHandler()); 
 });
 
+var getSession = function(req) {
+  return {client_id: conf.client_id, access_token: req.session.access_token || null, user: req.session.user || null};
+}
+
 // Routes
 app.get('/', function(req, res) {
-  res.render('index', {session: {client_id: conf.client_id}});
+  res.render('index.html', getSession(req));
+});
+app.post('/session', function(req, res) {
+  req.session.user = req.body.user;
+  req.session.access_token = req.body.access_token;
+  res.send();
+});
+app.get('/session', function(req, res) {
+  res.send(getSession(req));
 });
 
 //Only listen on $ node app.js

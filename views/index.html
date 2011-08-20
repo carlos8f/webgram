@@ -10,15 +10,11 @@
 
     <!-- scripts -->
     <script type="text/javascript" src="/js/lib/underscore-min.js"></script>
-    <script type="text/javascript" src="/js/lib/query-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/js/lib/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="/js/webgram.js"></script>
 
     <!-- bootstrap -->
-    <script type="text/javascript">
-      $(function() {
-        Webgram.initialize(<%= JSON.stringify(session) %>);
-      });
-    </script>
+    <script type="text/javascript" src="/session?callback=Webgram.bootstrap"></script>
   </html>
   <body>
     <div id="topbar"></div>

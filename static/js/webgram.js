@@ -1,5 +1,7 @@
 (function() {
 
+  var apiBase = 'https://api.instagram.com/v1';
+
   var routes = {
     '/': 'home',
     '/login': 'login',
@@ -10,14 +12,13 @@
 
   var session = Webgram.session = {};
 
+  var lastURI;
+
   var initialize = Webgram.initialize = function(session) {
-    this.session = session;
+    Webgram.session = session;
 
     // Render persistent elements.
     $('#topbar').html(render('topbar'));
-
-    // Standardize the hash.
-    window.location.hash = '#' + getURI();
 
     // Navigate according to the current hash.
     navigate();
@@ -38,6 +39,9 @@
   var navigate = Webgram.navigate = function(uri) {
     var m, regex;
     uri = uri || getURI();
+    if (uri === lastURI) {
+      return;
+    }
     for (var path in routes) {
       regex = new RegExp('^'+path.replace(':id', '([^/]+)').replace(/\//g, '\\/') + "$", 'gi');
       m = regex.exec(uri);
@@ -51,12 +55,12 @@
   };
 
   var render = Webgram.render = function(name) {
-    return _.template($('#template-' + name).text(), session);
+    return _.template($('#template-' + name).text(), Webgram);
   };
 
   var controller = Webgram.controller = {
     home: function() {
-      if (!session.user) {
+      if (!Webgram.session.user) {
         $('#page').append(render('anon-home'));
       }
       else {
@@ -67,9 +71,34 @@
       window.location = 'http://instagram.com/oauth/authorize/?client_id=' + escape(this.session.client_id) + '&redirect_uri=' + escape('http://localhost:3000/') + '&response_type=token&scope=comments+relationships+likes';
     },
     access_token: function(id) {
-      navigate('/');
+      $.ajax({
+        url: apiBase + '/users/self',
+        dataType: 'jsonp',
+        data: {access_token: id},
+        success: function(data) {
+          // Fill the session variable.
+          Webgram.session = {client_id: session.client_id, user: data.data, access_token: id};
+          // Re-render topbar with logged-in stuff.
+          $('#topbar').html(render('topbar'));
+
+          // Notify the server for session persistence.
+          $.ajax({
+            url: '/session',
+            type: 'POST',
+            data: Webgram.session
+          });
+          window.location.hash = '#/';
+        }
+      });
     }
   };
+
+  var bootstrap = Webgram.bootstrap = function(session) {
+    // Initialize when the DOM is ready.
+    $(function() {
+      initialize(session);
+    });
+  }
 
   window.Webgram = Webgram;
 
