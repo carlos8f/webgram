@@ -25,12 +25,12 @@
       <div class="fixed">
         <% if (session.user) { %>
         <div class="current-user">
-          <a href="/#/users/<%= session.user.id %>"><img src="<%= session.user.profile_picture %>" alt="<%= session.user.username %>&rsquo;s picture" /></a>
-          <a href="/#/users/<%= session.user.id %>" class="username"><%= session.user.username %></a>
+          <a href="#/users/<%= session.user.id %>"><img src="<%= session.user.profile_picture %>" alt="<%= session.user.username %>&rsquo;s picture" /></a>
+          <a href="#/users/<%= session.user.id %>" class="username"><%= session.user.username %></a>
           <span class="buttons">
-            <a href="/#/users/<%= session.user.id %>/photos"><strong><%= session.user.counts.media %></strong> photos</a>
-            <a href="/#/users/<%= session.user.id %>/following"><strong><%= session.user.counts.follows %></strong> follows</a>
-            <a href="/#/users/<%= session.user.id %>/followed_by"><strong><%= session.user.counts.media %></strong> followers</a>
+            <a href="#/users/<%= session.user.id %>/photos"><strong><%= session.user.counts.media %></strong> photos</a>
+            <a href="#/users/<%= session.user.id %>/following"><strong><%= session.user.counts.follows %></strong> follows</a>
+            <a href="#/users/<%= session.user.id %>/followed_by"><strong><%= session.user.counts.media %></strong> followers</a>
           </span>
         </div>
         <% } else { %>
@@ -64,8 +64,17 @@
     </script>
 
     <script id="template-feed" type="text/template">
-      <div class="container feed">
-        <h2>Hello, <%= session.user.full_name || session.user.username %> :)</h2>
+      <div class="feed"></div>
+    </script>
+
+    <script id="template-thumb" type="text/template">
+      <div class="thumb">
+        <a href="#/photos/<%= photo.id %>"><img src="<%= photo.images.low_resolution.url %>" alt="<%= photo.caption %>" width="<%= photo.images.low_resolution.width %>" height="<%= photo.images.low_resolution.height %>" /></a>
+        <div class="meta">
+          <a class="user" href="#/users/<%= photo.user.id %>/photos"><%= photo.user.username %></a>
+          <a class="comments" href="#/photos/<%= photo.id %>/comments"><%= photo.comments.count %></a>
+          <a class="likes" href="javascript:void(0);" onclick="Webgram.toggleLike(this, <%= photo.id %>);" class="likes"><%= photo.likes.count %></a>
+        </div>
       </div>
     </script>
   </body>

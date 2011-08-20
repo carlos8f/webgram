@@ -55,8 +55,8 @@
     }
   };
 
-  var render = Webgram.render = function(name) {
-    return _.template($('#template-' + name).text(), Webgram);
+  var render = Webgram.render = function(name, context) {
+    return _.template($('#template-' + name).text(), context || Webgram);
   };
 
   var controller = Webgram.controller = {
@@ -70,8 +70,10 @@
           dataType: 'jsonp',
           data: {access_token: Webgram.session.access_token},
           success: function(data) {
-            console.log(data);
             $('#page').append(render('feed'));
+            _.each(data.data, function(photo) {
+              $('.feed').append(render('thumb', {photo: photo}));
+            });
           }
         });
       }

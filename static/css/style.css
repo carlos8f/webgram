@@ -6,6 +6,11 @@ body {
 }
 .anon-home {
   text-align: center;
+  padding-top: 50px;
+}
+.anon-home .well {
+  min-height: 200px;
+  padding-top: 100px;
 }
 h1 {
   font-weight: normal;
@@ -13,6 +18,8 @@ h1 {
 div.topbar {
   padding-left: 30px;
   height: 60px;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(0, 0, 0, 0.8) inset;
+  background: -moz-linear-gradient(0% 100% 90deg, rgba(30, 30, 30, 0.95), rgba(50, 50, 50, 0.95)) repeat scroll 0 0 transparent;
 }
 div.topbar h3 {
   float: left;
@@ -60,4 +67,11 @@ div.topbar ul li a {
 }
 div.topbar ul li.search {
   padding: 0 10px;
+}
+.feed {
+  padding: 0 20px 20px 20px;
+}
+.feed .thumb {
+  float: left;
+  margin: 0 20px 20px 0;
 }
