@@ -22,14 +22,27 @@
 
     <script id="template-topbar" type="text/template">
     <div class="topbar">
-      <div class="container fixed">
+      <div class="fixed">
+        <% if (session.user) { %>
+        <div class="current-user">
+          <a href="/#/users/<%= session.user.id %>"><img src="<%= session.user.profile_picture %>" alt="<%= session.user.username %>&rsquo;s picture" /></a>
+          <a href="/#/users/<%= session.user.id %>" class="username"><%= session.user.username %></a>
+          <span class="buttons">
+            <a href="/#/users/<%= session.user.id %>/photos"><strong><%= session.user.counts.media %></strong> photos</a>
+            <a href="/#/users/<%= session.user.id %>/following"><strong><%= session.user.counts.follows %></strong> follows</a>
+            <a href="/#/users/<%= session.user.id %>/followed_by"><strong><%= session.user.counts.media %></strong> followers</a>
+          </span>
+        </div>
+        <% } else { %>
         <h3><a class="logo" href="#/">Webgram</a></h3>
+        <% } %>
         <ul>
         <% if (session.user) { %>
-          <li><a href="#/feed">Feed</a></li>
+          <li><a href="#/">Feed</a></li>
           <li><a href="#/users/<%= session.user.id %>/photos">My photos</a></li>
           <li><a href="#/users/<%= session.user.id %>/likes">My likes</a></li>
           <li><a href="#/popular">Popular</a></li>
+          <li class="search"><form><input type="text" placeholder="Search" /></form></li>
           <li><a href="#/logout">Log out</a></li>
         <% } else { %>
           <li><a href="#/popular">Popular</a></li>

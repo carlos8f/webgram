@@ -19,7 +19,7 @@
     Webgram.session = session;
 
     // Render persistent elements.
-    $('#topbar').html(render('topbar'));
+    $('#topbar').hide().html(render('topbar')).fadeIn();
 
     // Navigate according to the current hash.
     navigate();
@@ -65,13 +65,22 @@
         $('#page').append(render('anon-home'));
       }
       else {
-        $('#page').append(render('feed'));
+        $.ajax({
+          url: apiBase + '/users/self/feed',
+          dataType: 'jsonp',
+          data: {access_token: Webgram.session.access_token},
+          success: function(data) {
+            console.log(data);
+            $('#page').append(render('feed'));
+          }
+        });
       }
     },
     login: function() {
       window.location = 'http://instagram.com/oauth/authorize/?client_id=' + escape(this.session.client_id) + '&redirect_uri=' + escape('http://localhost:3000/') + '&response_type=token&scope=comments+relationships+likes';
     },
     access_token: function(id) {
+      $('#topbar').hide();
       $.ajax({
         url: apiBase + '/users/self',
         dataType: 'jsonp',
@@ -80,7 +89,7 @@
           // Fill the session variable.
           Webgram.session = {client_id: Webgram.session.client_id, user: data.data, access_token: id};
           // Re-render topbar with logged-in stuff.
-          $('#topbar').html(render('topbar'));
+          $('#topbar').html(render('topbar')).fadeIn();
 
           // Notify the server for session persistence.
           $.ajax({
@@ -98,7 +107,7 @@
       // Clear out the session variable.
       Webgram.session = {client_id: Webgram.session.client_id, user: null, access_token: null};
       // Re-render topbar with logged-out stuff.
-      $('#topbar').html(render('topbar'));
+      $('#topbar').hide().html(render('topbar')).fadeIn();
 
       // Notify the server for session persistence.
       $.ajax({

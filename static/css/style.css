@@ -1,3 +1,6 @@
+html, body {
+  background: #303030;
+}
 body {
   padding-top: 80px;
 }
@@ -6,4 +9,55 @@ body {
 }
 h1 {
   font-weight: normal;
+}
+div.topbar {
+  padding-left: 30px;
+  height: 60px;
+}
+div.topbar h3 {
+  float: left;
+}
+div.topbar h3, div.topbar ul {
+  margin-top: 10px;
+}
+div.topbar ul {
+  float: right;
+}
+div.topbar ul li a {
+  padding: 10px 10px 10px 11px;
+}
+.current-user {
+  margin-top: 10px;
+  float: left;
+  width: 250px;
+  position: relative;
+}
+.current-user img {
+  background-size: 40px;
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  float: left;
+  margin-right: 10px;
+}
+.current-user .username {
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.9);
+}
+.current-user .buttons {
+  font-size: 11px;
+  position: absolute;
+  top: 22px;
+  left: 50px;
+}
+.current-user .buttons a {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+div.topbar ul li.search {
+  padding: 0 10px;
 }
