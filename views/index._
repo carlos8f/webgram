@@ -21,6 +21,7 @@
     </script>
   </html>
   <body>
+    <div id="topbar"></div>
     <div id="page"></div>
 
     <script id="template-topbar" type="text/template">
