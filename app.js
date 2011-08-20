@@ -39,7 +39,7 @@ app.configure('production', function() {
 
 // Routes
 app.get('/', function(req, res) {
-  res.render('index', {session: {}});
+  res.render('index', {session: {client_id: conf.client_id}});
 });
 
 //Only listen on $ node app.js

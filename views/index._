@@ -16,7 +16,7 @@
     <!-- bootstrap -->
     <script type="text/javascript">
       $(function() {
-        var wg = new Webgram(<%= JSON.stringify(session) %>);
+        Webgram.initialize(<%= JSON.stringify(session) %>);
       });
     </script>
   </html>
@@ -48,8 +48,14 @@
         <div class="well">
           <h1>Welcome to <a href="#/">Webgram</a>.</h1>
           <p>The missing UI for Instagram. To get started,</p>
-          <p><a href="/login" class="btn primary">Log in with Instagram</a></p>
+          <p><a href="#/login" class="btn primary">Log in with Instagram</a></p>
         </div>
+      </div>
+    </script>
+
+    <script id="template-feed" type="text/template">
+      <div class="container feed">
+        <p>Woo! authenticated...</p>
       </div>
     </script>
   </body>
