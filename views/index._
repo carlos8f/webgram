@@ -10,7 +10,7 @@
 
     <!-- scripts -->
     <script type="text/javascript" src="/js/lib/underscore-min.js"></script>
-    <script type="text/javascript" src="/js/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/lib/query-1.6.2.min.js"></script>
     <script type="text/javascript" src="/js/webgram.js"></script>
 
     <!-- bootstrap -->
