@@ -55,8 +55,8 @@ app.get('/', function(req, res) {
   res.render('index.html', getSession(req));
 });
 app.post('/session', function(req, res) {
-  req.session.user = req.body.user;
-  req.session.access_token = req.body.access_token;
+  req.session.user = req.body.user == "null" ? null : req.body.user;
+  req.session.access_token = req.body.access_token == "null" ? null : req.body.access_token;
   res.send();
 });
 app.get('/session', function(req, res) {
