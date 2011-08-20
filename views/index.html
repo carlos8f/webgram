@@ -30,7 +30,7 @@
           <li><a href="#/users/<%= session.user.id %>/photos">My photos</a></li>
           <li><a href="#/users/<%= session.user.id %>/likes">My likes</a></li>
           <li><a href="#/popular">Popular</a></li>
-          <li><a href="/logout">Log out</a></li>
+          <li><a href="#/logout">Log out</a></li>
         <% } else { %>
           <li><a href="#/popular">Popular</a></li>
           <li><a href="#/about">About</a></li>
@@ -52,7 +52,7 @@
 
     <script id="template-feed" type="text/template">
       <div class="container feed">
-        <p>Woo! authenticated...</p>
+        <h2>Hello, <%= session.user.full_name || session.user.username %> :)</h2>
       </div>
     </script>
   </body>

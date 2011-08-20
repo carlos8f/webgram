@@ -5,7 +5,8 @@
   var routes = {
     '/': 'home',
     '/login': 'login',
-    '/access_token=:id': 'access_token'
+    '/access_token=:id': 'access_token',
+    '/logout': 'logout'
   };
 
   var Webgram = {};
@@ -77,7 +78,7 @@
         data: {access_token: id},
         success: function(data) {
           // Fill the session variable.
-          Webgram.session = {client_id: session.client_id, user: data.data, access_token: id};
+          Webgram.session = {client_id: Webgram.session.client_id, user: data.data, access_token: id};
           // Re-render topbar with logged-in stuff.
           $('#topbar').html(render('topbar'));
 
@@ -87,9 +88,27 @@
             type: 'POST',
             data: Webgram.session
           });
+
+          // Go back home.
           window.location.hash = '#/';
         }
       });
+    },
+    logout: function() {
+      // Clear out the session variable.
+      Webgram.session = {client_id: Webgram.session.client_id, user: null, access_token: null};
+      // Re-render topbar with logged-out stuff.
+      $('#topbar').html(render('topbar'));
+
+      // Notify the server for session persistence.
+      $.ajax({
+        url: '/session',
+        type: 'POST',
+        data: Webgram.session
+      });
+
+      // Go back home.
+      window.location.hash = '#/';
     }
   };
 
